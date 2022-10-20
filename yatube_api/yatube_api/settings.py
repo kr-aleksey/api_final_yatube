@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'api',
-    'posts',
+    'posts.apps.PostsConfig',
 ]
 
 MIDDLEWARE = [
@@ -102,5 +102,5 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFE_TIME': timedelta(days=1)
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
 }

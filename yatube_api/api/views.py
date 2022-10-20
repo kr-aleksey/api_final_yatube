@@ -3,13 +3,12 @@ from rest_framework import viewsets, permissions
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
 
-from posts.models import Comment, Group, Post, Follow
+from posts.models import Group, Post, Follow
 from . import serializers
 from .permissions import IsAuthorOrReadOnly
 
 
 class CommentVewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.select_related('author')
     serializer_class = serializers.CommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAuthorOrReadOnly)
@@ -20,7 +19,7 @@ class CommentVewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         post = self.get_post()
-        return self.queryset.filter(post=post)
+        return post.comments.select_related('author')
 
     def perform_create(self, serializer):
         post = self.get_post()
